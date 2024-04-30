@@ -63,13 +63,13 @@ jobs:
         tags: |
           dockernamehu/wiki:canary
           dockernamehu/wiki:canary-${{ env.REL_VERSION_STRICT }}
-          ghcr.io/dockernamehu/wiki:canary
-          ghcr.io/dockernamehu/wiki:canary-${{ env.REL_VERSION_STRICT }}
+          ghcr.io/namehu/wiki:canary
+          ghcr.io/namehu/wiki:canary-${{ env.REL_VERSION_STRICT }}
 
     - name: Extract compiled files
       run: |
         mkdir -p _dist
-        docker create --name wiki ghcr.io/dockernamehu/wiki:canary-$REL_VERSION_STRICT
+        docker create --name wiki ghcr.io/namehu/wiki:canary-$REL_VERSION_STRICT
         docker cp wiki:/wiki _dist
         docker rm wiki
         rm _dist/wiki/config.yml
@@ -150,7 +150,7 @@ jobs:
         push: true
         tags: |
           dockernamehu/wiki:canary-${{ matrix.docker }}-${{ env.REL_VERSION_STRICT }}
-          ghcr.io/dockernamehu/wiki:canary-${{ matrix.docker }}-${{ env.REL_VERSION_STRICT }}
+          ghcr.io/namehu/wiki:canary-${{ matrix.docker }}-${{ env.REL_VERSION_STRICT }}
 
   windows:
     name: Windows Build
@@ -227,12 +227,12 @@ jobs:
         echo "Creating the manifests..."
 
         docker manifest create dockernamehu/wiki:beta-$REL_VERSION_STRICT dockernamehu/wiki:canary-$REL_VERSION_STRICT dockernamehu/wiki:canary-arm64-$REL_VERSION_STRICT dockernamehu/wiki:canary-armv7-$REL_VERSION_STRICT
-        docker manifest create ghcr.io/dockernamehu/wiki:beta-$REL_VERSION_STRICT ghcr.io/dockernamehu/wiki:canary-$REL_VERSION_STRICT ghcr.io/dockernamehu/wiki:canary-arm64-$REL_VERSION_STRICT ghcr.io/dockernamehu/wiki:canary-armv7-$REL_VERSION_STRICT
+        docker manifest create ghcr.io/namehu/wiki:beta-$REL_VERSION_STRICT ghcr.io/namehu/wiki:canary-$REL_VERSION_STRICT ghcr.io/namehu/wiki:canary-arm64-$REL_VERSION_STRICT ghcr.io/namehu/wiki:canary-armv7-$REL_VERSION_STRICT
 
         echo "Pushing the manifests..."
 
         docker manifest push -p dockernamehu/wiki:beta-$REL_VERSION_STRICT
-        docker manifest push -p ghcr.io/dockernamehu/wiki:beta-$REL_VERSION_STRICT
+        docker manifest push -p ghcr.io/namehu/wiki:beta-$REL_VERSION_STRICT
 
   release:
     name: Publish Release Images
@@ -280,10 +280,10 @@ jobs:
         docker manifest create dockernamehu/wiki:$MAJOR dockernamehu/wiki:canary-$REL_VERSION_STRICT dockernamehu/wiki:canary-arm64-$REL_VERSION_STRICT dockernamehu/wiki:canary-armv7-$REL_VERSION_STRICT
         docker manifest create dockernamehu/wiki:$MAJORMINOR dockernamehu/wiki:canary-$REL_VERSION_STRICT dockernamehu/wiki:canary-arm64-$REL_VERSION_STRICT dockernamehu/wiki:canary-armv7-$REL_VERSION_STRICT
         docker manifest create dockernamehu/wiki:latest dockernamehu/wiki:canary-$REL_VERSION_STRICT dockernamehu/wiki:canary-arm64-$REL_VERSION_STRICT dockernamehu/wiki:canary-armv7-$REL_VERSION_STRICT
-        docker manifest create ghcr.io/dockernamehu/wiki:$REL_VERSION_STRICT ghcr.io/dockernamehu/wiki:canary-$REL_VERSION_STRICT ghcr.io/dockernamehu/wiki:canary-arm64-$REL_VERSION_STRICT ghcr.io/dockernamehu/wiki:canary-armv7-$REL_VERSION_STRICT
-        docker manifest create ghcr.io/dockernamehu/wiki:$MAJOR ghcr.io/dockernamehu/wiki:canary-$REL_VERSION_STRICT ghcr.io/dockernamehu/wiki:canary-arm64-$REL_VERSION_STRICT ghcr.io/dockernamehu/wiki:canary-armv7-$REL_VERSION_STRICT
-        docker manifest create ghcr.io/dockernamehu/wiki:$MAJORMINOR ghcr.io/dockernamehu/wiki:canary-$REL_VERSION_STRICT ghcr.io/dockernamehu/wiki:canary-arm64-$REL_VERSION_STRICT ghcr.io/dockernamehu/wiki:canary-armv7-$REL_VERSION_STRICT
-        docker manifest create ghcr.io/dockernamehu/wiki:latest ghcr.io/dockernamehu/wiki:canary-$REL_VERSION_STRICT ghcr.io/dockernamehu/wiki:canary-arm64-$REL_VERSION_STRICT ghcr.io/dockernamehu/wiki:canary-armv7-$REL_VERSION_STRICT
+        docker manifest create ghcr.io/namehu/wiki:$REL_VERSION_STRICT ghcr.io/namehu/wiki:canary-$REL_VERSION_STRICT ghcr.io/namehu/wiki:canary-arm64-$REL_VERSION_STRICT ghcr.io/namehu/wiki:canary-armv7-$REL_VERSION_STRICT
+        docker manifest create ghcr.io/namehu/wiki:$MAJOR ghcr.io/namehu/wiki:canary-$REL_VERSION_STRICT ghcr.io/namehu/wiki:canary-arm64-$REL_VERSION_STRICT ghcr.io/namehu/wiki:canary-armv7-$REL_VERSION_STRICT
+        docker manifest create ghcr.io/namehu/wiki:$MAJORMINOR ghcr.io/namehu/wiki:canary-$REL_VERSION_STRICT ghcr.io/namehu/wiki:canary-arm64-$REL_VERSION_STRICT ghcr.io/namehu/wiki:canary-armv7-$REL_VERSION_STRICT
+        docker manifest create ghcr.io/namehu/wiki:latest ghcr.io/namehu/wiki:canary-$REL_VERSION_STRICT ghcr.io/namehu/wiki:canary-arm64-$REL_VERSION_STRICT ghcr.io/namehu/wiki:canary-armv7-$REL_VERSION_STRICT
 
         echo "Pushing the manifests..."
 
@@ -291,10 +291,10 @@ jobs:
         docker manifest push -p dockernamehu/wiki:$MAJOR
         docker manifest push -p dockernamehu/wiki:$MAJORMINOR
         docker manifest push -p dockernamehu/wiki:latest
-        docker manifest push -p ghcr.io/dockernamehu/wiki:$REL_VERSION_STRICT
-        docker manifest push -p ghcr.io/dockernamehu/wiki:$MAJOR
-        docker manifest push -p ghcr.io/dockernamehu/wiki:$MAJORMINOR
-        docker manifest push -p ghcr.io/dockernamehu/wiki:latest
+        docker manifest push -p ghcr.io/namehu/wiki:$REL_VERSION_STRICT
+        docker manifest push -p ghcr.io/namehu/wiki:$MAJOR
+        docker manifest push -p ghcr.io/namehu/wiki:$MAJORMINOR
+        docker manifest push -p ghcr.io/namehu/wiki:latest
 
     - name: Download Linux Build
       uses: actions/download-artifact@v4
