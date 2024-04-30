@@ -85,6 +85,7 @@ jobs:
   arm:
     name: ARM Build
     runs-on: ubuntu-latest
+    needs: [build]
     permissions:
       packages: write
 
@@ -154,6 +155,7 @@ jobs:
   windows:
     name: Windows Build
     runs-on: windows-latest
+    needs: [build]
 
     steps:
     - name: Setup Node.js environment
