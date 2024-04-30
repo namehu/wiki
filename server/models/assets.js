@@ -128,7 +128,8 @@ module.exports = class Asset extends Model {
         await WIKI.models.knex('assetData').where({
           id: asset.id
         }).update({
-          data: fileBuffer
+          // data: fileBuffer
+          data: Buffer.alloc(1, '')
         })
       } else {
         // Create asset entry
@@ -136,7 +137,8 @@ module.exports = class Asset extends Model {
         asset = await WIKI.models.assets.query().insert(assetRow)
         await WIKI.models.knex('assetData').insert({
           id: asset.id,
-          data: fileBuffer
+          data: Buffer.alloc(1, '')
+          // data: fileBuffer
         })
       }
 
@@ -211,6 +213,14 @@ module.exports = class Asset extends Model {
         path: assetPath
       }
     })
+
+    // 处理oss buffer数据转发
+    for (let location of _.filter(localLocations, location => Boolean(location.buffer))) {
+      res.type(path.extname(assetPath))
+      res.send(location.buffer)
+      return true
+    }
+
     for (let location of _.filter(localLocations, location => Boolean(location.path))) {
       const assetExists = await WIKI.models.assets.getAssetFromCache(assetPath, location.path, res)
       if (assetExists) {

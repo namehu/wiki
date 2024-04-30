@@ -22,7 +22,7 @@ const getFilePath = (page, pathKey) => {
 module.exports = class S3CompatibleStorage {
   constructor(storageName) {
     this.storageName = storageName
-    this.bucketName = ""
+    this.bucketName = ''
   }
   async activated() {
     // not used
@@ -122,8 +122,19 @@ module.exports = class S3CompatibleStorage {
     await this.s3.copyObject({ CopySource: `${this.bucketName}/${asset.path}`, Key: asset.destinationPath }).promise()
     await this.s3.deleteObject({ Key: asset.path }).promise()
   }
-  async getLocalLocation () {
-
+  async getLocalLocation (asset) {
+    return new Promise((resolve, reject) => {
+      this.s3.getObject({
+        Bucket: this.config.bucket,
+        Key: asset.path
+      }, (error, data) => {
+        if (error) {
+          reject(error)
+          return console.error(error.message)
+        }
+        resolve(data.Body)
+      })
+    })
   }
   /**
    * HANDLERS

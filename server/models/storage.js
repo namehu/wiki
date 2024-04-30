@@ -205,7 +205,8 @@ module.exports = class Storage extends Model {
       try {
         const path = await target.fn.getLocalLocation(asset)
         locations.push({
-          path,
+          buffer: typeof path === 'object' ? path : undefined,
+          path: typeof path === 'string' ? path : undefined,
           key: target.key
         })
       } catch (err) {
