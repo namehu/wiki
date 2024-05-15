@@ -87,6 +87,20 @@ export default {
             words: stats.words
           }
         }
+      },
+      // 支持引入视频文件
+      mediaEmbed: {
+        previewsInData: true, // This enables previews directly in the editor content
+        providers: [
+          {
+            name: 'mm',
+            url: /^http(s)?:\/\/(.+)\.(mp4|wmv|rmvb|rm|mov|m4v|avi|flv|mkv)$/,
+            html: match =>
+              '<div style="position:relative;width: 100%; padding-bottom:56.25%; height:0">' +
+`<video src="${match[0]}" controls style="position:absolute; width:100%; height:100%; top:0; left:0" />` +
+'</div>'
+          }
+        ]
       }
     })
     this.$refs.toolbarContainer.appendChild(this.editor.ui.view.toolbar.element)
