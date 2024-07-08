@@ -150,7 +150,7 @@
               )
             v-divider
             v-card-actions.pa-3
-              .caption.grey--text.text-darken-2 Max 10 files, 10 MB each
+              .caption.grey--text.text-darken-2 Max 10 files, 20 MB each
               v-spacer
               v-btn.px-4(color='teal', dark, @click='upload') {{$t('common:actions.upload')}}
 
