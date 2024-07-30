@@ -14,6 +14,7 @@ COPY ./package.json ./package.json
 COPY ./.babelrc ./.babelrc
 COPY ./.eslintignore ./.eslintignore
 COPY ./.eslintrc.yml ./.eslintrc.yml
+COPY ./.npmrc ./.npmrc
 
 RUN yarn cache clean
 RUN yarn --frozen-lockfile --non-interactive
