@@ -357,7 +357,7 @@ export default {
     async getSTSToken() {
       return new Promise((resolve, reject) => {
         OSS.urllib.request(
-          "http://mmdoc.t5.wmeimob.cn/oss/wiki/sts",
+          "https://mmdoc.t5.wmeimob.cn/oss/wiki/sts",
           { method: "POST" },
           (err, response) => {
             if (err) {
