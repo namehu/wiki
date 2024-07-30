@@ -124,6 +124,11 @@
           span {{$t('editor:markup.insertAssets')}}
         v-tooltip(right, color='teal')
           template(v-slot:activator='{ on }')
+            v-btn.mt-3.animated.fadeInLeft.wait-p1s(icon, tile, v-on='on', dark, @click='toggleModal(`editorModalOSS`)').mx-0
+              v-icon(:color='activeModal === `editorModalOSS` ? `teal` : ``') mdi-image-filter-drama
+          span {{'OSS上传静态资源'}}
+        v-tooltip(right, color='teal')
+          template(v-slot:activator='{ on }')
             v-btn.mt-3.animated.fadeInLeft.wait-p2s(icon, tile, v-on='on', dark, @click='toggleModal(`editorModalDrawio`)').mx-0
               v-icon mdi-chart-multiline
           span {{$t('editor:markup.insertDiagram')}}

@@ -3404,11 +3404,6 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
-"@requarks/ckeditor5@19.0.1-wiki.2":
-  version "19.0.1-wiki.2"
-  resolved "https://registry.yarnpkg.com/@requarks/ckeditor5/-/ckeditor5-19.0.1-wiki.2.tgz#d601d868522680095ba50ded08094d72d74c4ca4"
-  integrity sha512-l2B7VB7SmX318IAwx9EdYmDujCEBQB7b+v5ySfLyK42eyKarWBuK76R0o2TudRn2z/17dvmR5zaQBEW3fDIPsg==
-
 "@root/acme@^3.0.2":
   version "3.0.9"
   resolved "https://registry.yarnpkg.com/@root/acme/-/acme-3.0.9.tgz#437f4b46015e70587fb50119807889c944370388"
@@ -4302,6 +4297,11 @@
     "@webassemblyjs/ast" "1.9.0"
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
+
+"@wmeimob/ckeditor5@19.0.1":
+  version "19.0.1"
+  resolved "http://47.103.40.50:3200/@wmeimob/ckeditor5/-/ckeditor5-19.0.1.tgz#34a6cc79f572ba96dfa46dc4f2da410cf874110f"
+  integrity sha512-ZJvYtM+rR3vdfy8T/2QqoipMI48YPMUbMqDHLHTkX9h6nUolZrT4R1FcAS/l48cVXy0O2n7OO9nVR0CzGugA0w==
 
 "@wry/context@^0.4.0":
   version "0.4.4"

@@ -71,6 +71,10 @@ html(lang=siteConfig.lang)
     <% } %>
 
     //- JS
+    script(
+      crossorigin='anonymous'
+      src='https://gosspublic.alicdn.com/aliyun-oss-sdk-6.18.0.min.js'
+    )
     <% for (var index in htmlWebpackPlugin.files.js) { %>
       <% if (htmlWebpackPlugin.files.jsIntegrity) { %>
     script(
