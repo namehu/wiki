@@ -208,7 +208,7 @@
             .caption {{$t('admin:users.noGroupAssigned')}}
           v-card-chin(v-if='!user.isSystem')
             v-spacer
-            v-select(
+            v-autocomplete(
               ref='iptAssignGroup'
               :items='groups'
               v-model='newGroup'
