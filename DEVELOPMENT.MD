@@ -31,6 +31,13 @@ yarn dev
 yarn watch
 ```
 
+```bash
+启动后访问 127.0.0.1:3000
+
+账号 admin@wiki.com  9A#5b8@!3Cf6
+
+数据库访问地址 http://localhost:3001/
+```
 ## 镜像构建
 
 项目开发完毕后。需要构建镜像。本仓库提供了 GitHubAction的构建与 云效流水线的构建。
