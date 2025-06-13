@@ -26,7 +26,7 @@ RUN yarn patch-package
 # ===============
 # --- Release ---
 # ===============
-FROM node:18-alpine
+FROM registry.cn-hangzhou.aliyuncs.com/wmemob-public/frontend:node-18-alpine
 LABEL maintainer="requarks.io"
 
 RUN apk add bash curl git openssh gnupg sqlite --no-cache && \
