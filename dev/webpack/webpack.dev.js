@@ -280,5 +280,13 @@ module.exports = {
     entrypoints: false
   },
   target: 'web',
-  watch: true
+  watch: true,
+  watchOptions: {
+    aggregateTimeout: 300,
+    poll: 1000,
+    ignored: [
+      /node_modules(?!\/vuetify)/,
+      /\.webpack-cache/
+    ]
+  }
 }
