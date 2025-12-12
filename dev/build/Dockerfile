@@ -11,6 +11,7 @@ COPY ./client ./client
 COPY ./dev ./dev
 COPY ./patches ./patches
 COPY ./package.json ./package.json
+COPY ./yarn.lock ./yarn.lock
 COPY ./.babelrc ./.babelrc
 COPY ./.eslintignore ./.eslintignore
 COPY ./.eslintrc.yml ./.eslintrc.yml
