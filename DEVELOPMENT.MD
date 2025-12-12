@@ -1,93 +1,130 @@
 # 开发指南
 
-本文档旨在为美萌开发者提供开发指南，帮助开发者快速上手。
+本文档旨在帮助开发者快速了解并上手美萌（Meimob）Wiki 项目的开发流程。
 
-## 快速上手
+## 📋 环境准备
 
-本文档采用的是 Vscode + Docker 的开发环境。是依据 [Wiki DEV](https://docs.requarks.io/dev) 指南基础上做的修改。所以你需要先读完这个文档
+本项目基于 VS Code + Docker 进行开发，基础架构参考了 [Wiki.js 官方开发指南](https://docs.requarks.io/dev)。在开始之前，建议先阅读官方文档以了解基本概念。
 
-## 仓库
+### 推荐工具
+- **编辑器**: VS Code
+- **环境**: Docker & Docker Compose
+- **包管理器**: Yarn
 
-本项目采用了双远端(remote)仓库机制。在项目中 需要有两个远端分支 `origin` 与 `wmeimob`。其中
+---
 
-- `origin`是默认GitHub远端分支。可以同步开源项目上的新增/BUG等
-- `wmeimob`是公司云效仓库。用于触发流水线与部署
+## 📦 仓库管理
 
-你可以通过 `git remote -v` 命令查看。
+本项目采用**双远端（Double Remote）**仓库机制，以兼顾开源同步与内部部署需求。
 
-> 如果没有 `wmeimob` 分支。请先执行 `git remote add wmeimob git@codeup.aliyun.com:{xxxxxx}/r_d_center/wikijs.git` 添加远端分支
-> 推送代码 **git push wmeimob**
+### 分支说明
+- **`origin`**: 默认的 GitHub 远端仓库。用于同步开源项目的更新、Bug 修复等。
+- **`wmeimob`**: 公司内部云效仓库。用于触发 CI/CD 流水线与部署。
 
-## 开发
+### 配置指南
 
-在package.json文件中。有两个命令需要关注
+1. **查看当前远端配置**
+   ```bash
+   git remote -v
+   ```
+
+2. **添加内部仓库（如果缺失）**
+   如果你的配置中没有 `wmeimob`，请执行以下命令添加：
+   ```bash
+   git remote add wmeimob git@codeup.aliyun.com:{xxxxxx}/r_d_center/wikijs.git
+   ```
+
+3. **日常推送**
+   开发完成后，请推送到内部仓库以触发流水线：
+   ```bash
+   git push wmeimob
+   ```
+
+---
+
+## 💻 本地开发
+
+### 启动项目
+
+在 `package.json` 中提供了以下核心开发命令：
 
 ```bash
-// 启动开发环境。会同时启动服务端与客户端应用
+# 1. 启动服务端
 yarn dev
 
-
-// 启动客户端。并监听文件修改。 注意： 实际操作过程发现这个dev修改并不生效。具体原因未查询
+# 2. 启动客户端（支持热更新/监听文件修改）
 yarn watch
 ```
 
-```bash
-启动后访问 127.0.0.1:3000
+### 访问服务
 
-账号 admin@wiki.com  9A#5b8@!3Cf6
+启动成功后，可通过以下地址访问服务：
 
-数据库访问地址 http://localhost:3001/
-```
-## 镜像构建
+| 服务 | 地址 | 默认账号 | 默认密码 |
+| :--- | :--- | :--- | :--- |
+| **Wiki 站点** | http://127.0.0.1:3000 | `admin@wiki.com` | `9A#5b8@!3Cf6` |
+| **数据库管理** | http://localhost:3001/ | - | - |
 
-项目开发完毕后。需要构建镜像。本仓库提供了 GitHubAction的构建与 云效流水线的构建。
+---
 
-**在Docker HUB 被墙后。目前不建议采用GitHubAction构建镜像。**。而只是作为同步分支使用。不过这里依旧会讲述如何构建
+## 🚀 镜像构建与发布
 
-### 云效FLow
+项目开发完成后需要构建 Docker 镜像。我们支持多种构建方式，推荐使用云效流水线。
 
-当你修改完代码后。需要构建镜像。在云效流水线中。设置了推送代码即触发构建.即  `git push wmeimob`到远端后进行构建-部署
+### 1. 云效 Flow (推荐) ✅
 
-### GitHubAction (不推荐)
+这是公司内部标准的发布流程：
 
-在GitHubAction中。也设置了触发构建。目前采用的是通过tag 触发构建。
+1. 提交代码并推送到内部远端：
+   ```bash
+   git push wmeimob
+   ```
+2. 前往云效流水线页面，手动或自动触发构建与部署任务。
 
-构建完毕后会将镜像推送到Docker Hub。
+### 2. GitHub Action (不推荐) ⚠️
 
-```bash
-git tag v2.5.301-{内部版本}
+> **注意**: 由于 Docker Hub 网络连接问题，目前仅建议将 GitHub Action 作为代码同步手段，不建议依赖其进行镜像构建。
 
-git push --tags // 推送标签 触发GitHub Action
-```
-
-### 本地构建镜像
-
-当然如果上述的两种方式你都不可用时。你可以自己在本地进行镜像构建。具体操作为
-
-- 1.修改package.json中的dev为false。 关闭开发提示
-
-- 2.构建镜像. 时间会比较长（10-20分钟）
+GitHub Action 通过 Git Tag 触发：
 
 ```bash
-# 构建镜像
-docker build -t {yourworkspace}/wiki -f dev/build/Dockerfile .
+# 打标签
+git tag v2.5.301-{内部版本号}
+
+# 推送标签触发 Action
+git push --tags
 ```
 
-- 3. 发布到远端仓库
+### 3. 本地构建 (备选方案) 🛠️
+
+当上述 CI/CD 工具不可用时，可手动在本地构建镜像。
+
+**步骤：**
+
+1. **配置修改**: 将 `package.json` 中的 `dev` 字段设为 `false`，关闭开发提示。
+2. **构建镜像**: (耗时约 10-20 分钟)
+   ```bash
+   # 请替换 {yourworkspace} 为实际的命名空间
+   docker build -t {yourworkspace}/wiki -f dev/build/Dockerfile .
+   ```
+3. **推送到远端**:
+   ```bash
+   docker push {yourworkspace}/wiki
+   ```
+
+---
+
+## 🌐 服务器部署
+
+在目标服务器上更新服务：
 
 ```bash
-docker push {yourworkspace}/wiki
-```
-
-### 服务器部署
-
-在服务器上 拉取最新仓库镜像
-
-```bash
-// 进入文件夹
+# 1. 进入 Compose 文件目录
 cd /compose-file-path
 
-docker-compose down // 停止现有容器服务
+# 2. 停止现有服务
+docker-compose down
 
-docker-compose up -d // 启动
+# 3. 拉取最新镜像并启动
+docker-compose up -d
 ```
